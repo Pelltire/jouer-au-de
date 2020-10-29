@@ -1,10 +1,8 @@
-input.onGesture(Gesture.Shake, function () {
-	
-})
-function affichédé () {
+let Chiffre = 0
+let sprite: game.LedSprite = null
+function Affichédé (num: number) {
     for (let index = 0; index < 3; index++) {
-        let nombre = 0
-        if (nombre == 1) {
+        if (Chiffre == 1) {
             basic.showLeds(`
                 . . . . .
                 . . . . .
@@ -13,7 +11,7 @@ function affichédé () {
                 . . . . .
                 `)
         } else {
-            if (nombre == 2) {
+            if (Chiffre == 2) {
                 basic.showLeds(`
                     . . . . .
                     . # . . .
@@ -22,7 +20,7 @@ function affichédé () {
                     . . . . .
                     `)
             } else {
-                if (nombre == 3) {
+                if (Chiffre == 3) {
                     basic.showLeds(`
                         . . . . .
                         . # . . .
@@ -31,7 +29,7 @@ function affichédé () {
                         . . . . .
                         `)
                 } else {
-                    if (nombre == 4) {
+                    if (Chiffre == 4) {
                         basic.showLeds(`
                             . . . . .
                             . # . # .
@@ -40,7 +38,7 @@ function affichédé () {
                             . . . . .
                             `)
                     } else {
-                        if (nombre == 5) {
+                        if (Chiffre == 5) {
                             basic.showLeds(`
                                 . . . . .
                                 . # . # .
@@ -49,7 +47,7 @@ function affichédé () {
                                 . . . . .
                                 `)
                         } else {
-                            if (nombre == 6) {
+                            if (Chiffre == 6) {
                                 basic.showLeds(`
                                     . . . . .
                                     . # . # .
@@ -65,6 +63,24 @@ function affichédé () {
         }
     }
 }
+function animation () {
+    sprite = game.createSprite(0, 0)
+    for (let index = 0; index < randint(30, 60); index++) {
+        if (sprite.isTouchingEdge()) {
+            sprite.turn(Direction.Right, 45)
+        }
+        sprite.move(1)
+        basic.pause(100)
+    }
+    sprite.delete()
+}
+input.onGesture(Gesture.Shake, function () {
+    animation()
+    Chiffre = randint(1, 6)
+    Affichédé(Chiffre)
+})
 basic.forever(function () {
-	
+    if (input.buttonIsPressed(Button.A)) {
+        Affichédé(Chiffre)
+    }
 })
